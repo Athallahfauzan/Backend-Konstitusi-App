@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router(); // Use Router instead of app
 
-// Endpoint untuk mendapatkan semua penilaian (ratings)
 router.get('/', (req, res) => {
   db.query('SELECT * FROM Ratings', (err, results) => {
     if (err) throw err;
@@ -9,7 +8,6 @@ router.get('/', (req, res) => {
   });
 });
 
-// Endpoint untuk menambahkan penilaian (ratings) baru
 router.post('/', (req, res) => {
   const { ProductID, ProfileID, Rating, Review } = req.body;
   const rating = { ProductID, ProfileID, Rating, Review };
@@ -19,7 +17,6 @@ router.post('/', (req, res) => {
   });
 });
 
-// Endpoint untuk mengupdate penilaian (ratings)
 router.put('/:id', (req, res) => {
   const { Rating, Review } = req.body;
   const ratingId = req.params.id;
@@ -29,7 +26,6 @@ router.put('/:id', (req, res) => {
   });
 });
 
-// Endpoint untuk menghapus penilaian (ratings)
 router.delete('/:id', (req, res) => {
   const ratingId = req.params.id;
   db.query('DELETE FROM Ratings WHERE RatingID = ?', ratingId, (err) => {
