@@ -2,14 +2,11 @@ const express = require('express');
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-
 const app = express();
 
-// Middleware untuk membaca data JSON dan formulir
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Import routes
 const adminloginRoutes = require('./routes/adminlogin');
 const bookingRoutes = require('./routes/booking');
 const categoryRoutes = require('./routes/category');
@@ -22,7 +19,6 @@ const profileRoutes = require('./routes/profile');
 const ratingsRoutes = require('./routes/ratings');
 const indexRoutes = require('./routes/index');
 
-// Use routes
 app.use('/adminlogin', adminloginRoutes);
 app.use('/booking', bookingRoutes);
 app.use('/category', categoryRoutes);
@@ -43,7 +39,6 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: `Internal server error: ${err.message}` });
 });
 
-// Start server
 const PORT = process.env.PORT || 4000;
 const server = http.createServer(app);
 
