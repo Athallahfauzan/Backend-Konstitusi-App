@@ -4,7 +4,6 @@ const db = require('../db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-// Endpoint untuk mendapatkan informasi userlogin
 router.get('/', async (req, res) => {
   const userId = req.params.id;
 
@@ -23,7 +22,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Endpoint untuk pendaftaran (signup)
 router.post('/signup', async (req, res) => {
   const { Name, Email, Password } = req.body;
 
@@ -43,7 +41,6 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-// Endpoint untuk login
 router.post('/login', async (req, res) => {
   const { Email, Password } = req.body;
 
