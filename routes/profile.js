@@ -4,7 +4,6 @@ const router = express.Router();
 const db = require('../db');
 const bcrypt = require('bcrypt');
 
-// Middleware untuk validasi input pada endpoint tertentu
 const validateInput = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -13,7 +12,6 @@ const validateInput = (req, res, next) => {
   next();
 };
 
-// Middleware untuk transaksi database
 const withTransaction = async (req, res, next) => {
   const connection = await db.beginTransaction();
   try {
@@ -25,11 +23,7 @@ const withTransaction = async (req, res, next) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
-
-// ... rest of your code
-
-
-// Endpoint untuk mendapatkan semua profil
+l
 router.get('/', async (req, res) => {
   try {
     const results = await db.query('SELECT * FROM Profile');
@@ -40,7 +34,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Endpoint untuk menambahkan profil baru
 router.post('/', [
   check('Name').notEmpty(),
   check('ContactInfo').notEmpty(),
@@ -68,7 +61,6 @@ router.post('/', [
   }
 });
 
-// Endpoint untuk memperbarui profil berdasarkan ID
 router.put('/:id', [
   check('Name').notEmpty(),
   check('ContactInfo').notEmpty(),
@@ -89,7 +81,6 @@ router.put('/:id', [
   }
 });
 
-// Endpoint untuk menghapus profil berdasarkan ID
 router.delete('/:id', withTransaction, async (req, res) => {
   const profileId = req.params.id;
 
