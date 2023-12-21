@@ -3,7 +3,6 @@ const { check, validationResult } = require('express-validator');
 const router = express.Router();
 const db = require('../db');
 
-// Middleware untuk validasi input pada endpoint tertentu
 const validateInput = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -12,7 +11,6 @@ const validateInput = (req, res, next) => {
   next();
 };
 
-// Middleware untuk transaksi database
 const withTransaction = async (req, res, next) => {
   try {
     await db.beginTransaction();
@@ -25,7 +23,6 @@ const withTransaction = async (req, res, next) => {
   }
 };
 
-// Endpoint untuk mendapatkan semua kategori
 router.get('/', async (req, res) => {
   try {
     const results = await db.query('SELECT * FROM Category');
@@ -36,7 +33,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Endpoint untuk menambahkan kategori baru
 router.post('/', [
   check('CategoryName').notEmpty(),
 ], validateInput, withTransaction, async (req, res) => {
@@ -52,8 +48,7 @@ router.post('/', [
   }
 });
 
-// Endpoint untuk memperbarui kategori berdasarkan ID
-router.put('/categories/:id', [
+router.put('/category/:id', [
   check('CategoryName').notEmpty(),
 ], validateInput, withTransaction, async (req, res) => {
   const { CategoryName } = req.body;
@@ -68,8 +63,7 @@ router.put('/categories/:id', [
   }
 });
 
-// Endpoint untuk menghapus kategori berdasarkan ID
-router.delete('/categories/:id', withTransaction, async (req, res) => {
+router.delete('/category/:id', withTransaction, async (req, res) => {
   try {
     const categoryId = req.params.id;
     await db.query('DELETE FROM Category WHERE CategoryID = ?', categoryId);
