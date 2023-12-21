@@ -3,7 +3,6 @@ const { check, validationResult } = require('express-validator');
 const router = express.Router();
 const db = require('../db');
 
-// Middleware untuk validasi input pada endpoint tertentu
 const validateInput = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -12,7 +11,6 @@ const validateInput = (req, res, next) => {
   next();
 };
 
-// Middleware untuk transaksi database
 const withTransaction = async (req, res, next) => {
   try {
     await db.beginTransaction();
@@ -25,7 +23,6 @@ const withTransaction = async (req, res, next) => {
   }
 };
 
-// Endpoint untuk mendapatkan semua pesanan
 router.get('/', async (req, res) => {
   try {
     const results = await db.query('SELECT * FROM OrderTable');
@@ -36,7 +33,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Endpoint untuk menempatkan pesanan baru
 router.post('/', [
   check('ProfileID').isInt(),
   check('OrderDate').isISO8601().toDate(),
@@ -57,7 +53,6 @@ router.post('/', [
   }
 });
 
-// Endpoint untuk memperbarui status pesanan berdasarkan ID
 router.put('/:id', [
   check('Status').notEmpty(),
 ], validateInput, withTransaction, async (req, res) => {
@@ -73,7 +68,6 @@ router.put('/:id', [
   }
 });
 
-// Endpoint untuk menghapus pesanan berdasarkan ID
 router.delete('/:id', withTransaction, async (req, res) => {
   const orderId = req.params.id;
 
