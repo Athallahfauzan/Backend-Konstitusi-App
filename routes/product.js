@@ -3,7 +3,6 @@ const { check, validationResult } = require('express-validator');
 const router = express.Router();
 const db = require('../db');
 
-// Middleware untuk validasi input pada endpoint tertentu
 const validateInput = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -12,7 +11,6 @@ const validateInput = (req, res, next) => {
   next();
 };
 
-// Middleware untuk transaksi database
 const withTransaction = async (req, res, next) => {
   try {
     await db.beginTransaction();
@@ -25,7 +23,6 @@ const withTransaction = async (req, res, next) => {
   }
 };
 
-// Endpoint untuk mendapatkan semua produk
 router.get('/', async (req, res) => {
   try {
     const results = await db.query('SELECT * FROM Product');
@@ -36,7 +33,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Endpoint untuk menambahkan produk baru
 router.post('/', [
   check('Name').notEmpty().withMessage('Name cannot be empty.'),
   check('Description').notEmpty().withMessage('Description cannot be empty.'),
@@ -56,7 +52,6 @@ router.post('/', [
   }
 });
 
-// Endpoint untuk memperbarui produk berdasarkan ID
 router.put('/:id', [
   check('Name').notEmpty().withMessage('Name cannot be empty.'),
   check('Description').notEmpty().withMessage('Description cannot be empty.'),
@@ -75,7 +70,6 @@ router.put('/:id', [
   }
 });
 
-// Endpoint untuk menghapus produk berdasarkan ID
 router.delete('/:id', withTransaction, async (req, res) => {
   const productId = req.params.id;
 
