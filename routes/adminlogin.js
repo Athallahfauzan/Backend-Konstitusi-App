@@ -13,8 +13,6 @@ router.post('/adminlogin', async (req, res) => {
 
     if (results.length > 0) {
       const admin = results[0];
-      
-      // Cocokkan password menggunakan bcrypt
       const passwordMatch = await bcrypt.compare(Password, admin.Password);
 
       if (passwordMatch) {
