@@ -1,6 +1,5 @@
 const mysql = require('mysql');
 
-// Create a connection pool
 const pool = mysql.createPool({
   connectionLimit: 10,
   host: 'DB_HOSTNAME',
@@ -9,7 +8,6 @@ const pool = mysql.createPool({
   database: 'DB_NAME',
 });
 
-// Wrap the query function to return a promise
 const query = (sql, values) => {
   return new Promise((resolve, reject) => {
     pool.query(sql, values, (err, results) => {
@@ -21,7 +19,6 @@ const query = (sql, values) => {
   });
 };
 
-// Wrap the beginTransaction function to return a promise
 const beginTransaction = () => {
   return new Promise((resolve, reject) => {
     pool.getConnection((err, connection) => {
@@ -39,7 +36,6 @@ const beginTransaction = () => {
   });
 };
 
-// Wrap the commit function to return a promise
 const commit = (connection) => {
   return new Promise((resolve, reject) => {
     if (connection) {
@@ -51,12 +47,11 @@ const commit = (connection) => {
         resolve();
       });
     } else {
-      resolve(); // Resolve if there is no connection (avoiding 'Cannot read properties of undefined' error)
+      resolve();
     }
   });
 };
 
-// Wrap the rollback function to return a promise
 const rollback = (connection) => {
   return new Promise((resolve) => {
     if (connection) {
@@ -65,7 +60,7 @@ const rollback = (connection) => {
         resolve();
       });
     } else {
-      resolve(); // Resolve if there is no connection (avoiding 'Cannot read properties of undefined' error)
+      resolve();
     }
   });
 };
