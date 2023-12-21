@@ -9,7 +9,7 @@ This is a JavaScript code built using Node.js
 git clone [repository URL]
 
 2. Navigate to the project directory:
-cd API-Konstitusi-2.0
+cd ABackend-Konstitusi-App
 
 3. Open terminal in the project root directory, then run `npm install` to install the dependencies.
 
