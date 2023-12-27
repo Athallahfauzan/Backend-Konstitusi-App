@@ -23,7 +23,7 @@ const withTransaction = async (req, res, next) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
-l
+
 router.get('/', async (req, res) => {
   try {
     const results = await db.query('SELECT * FROM Profile');
